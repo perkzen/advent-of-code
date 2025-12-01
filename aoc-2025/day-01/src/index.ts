@@ -30,7 +30,6 @@ async function main() {
   const systemPrompt = await generateSystemPrompt(part);
 
   console.log(`Solving Advent of Code Day 1, Part ${part}...`);
-  console.log('Generating solution...\n');
 
   try {
     const { text } = await generateText({
