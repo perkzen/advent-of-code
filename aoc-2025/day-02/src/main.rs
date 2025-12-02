@@ -10,7 +10,7 @@ fn is_invalid_id(id: &i64) -> bool {
     let mid = s.len() / 2;
     let (left, right) = s.split_at(mid);
 
-    left == right
+    return left == right;
 }
 
 fn is_invalid_id_part_two(id: &i64) -> bool {
@@ -24,7 +24,7 @@ fn is_invalid_id_part_two(id: &i64) -> bool {
         let pattern = &s[0..len];
 
         let k = s.len() / len;
-        if pattern.repeat(k) == s  {
+        if pattern.repeat(k) == s {
             return true;
         }
     }
@@ -44,17 +44,12 @@ fn parse_ranges(input: &str) -> impl Iterator<Item = (i64, i64)> + '_ {
         })
 }
 
-
 fn sum_invalid_ids<F>(input: &str, is_invalid: F) -> i64
 where
     F: Fn(i64) -> bool,
 {
     parse_ranges(input)
-        .map(|(lower, upper)| {
-            (lower..=upper)
-                .filter(|id| is_invalid(*id))
-                .sum::<i64>()
-        })
+        .map(|(lower, upper)| (lower..=upper).filter(|id| is_invalid(*id)).sum::<i64>())
         .sum()
 }
 
@@ -74,7 +69,6 @@ fn main() {
     part_one(&input);
     part_two(&input);
 }
-
 
 #[cfg(test)]
 mod tests {
