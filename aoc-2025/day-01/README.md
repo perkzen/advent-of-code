@@ -37,7 +37,7 @@ pnpm script 2
 ```
 day-01/
 ├── src/
-│   ├── index.ts              # Main agent entry point
+│   ├── solve.ts              # Main agent entry point
 │   ├── challenges.ts          # Problem descriptions
 │   └── tools/
 │       ├── write-file-tool.ts # Tool to write solution files
