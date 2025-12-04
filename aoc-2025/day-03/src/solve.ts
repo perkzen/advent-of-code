@@ -1,41 +1,32 @@
 import * as fs from 'node:fs';
-import * as path from 'node:path';
-import * as process from 'node:process';
-
-type Digits = {
-  value: number;
-  originalIndex: number;
-};
 
 function findBiggestCombination(numbers: number[], size: number): number {
-  const digits: Digits[] = numbers
-    .map((num, index) => ({
-      value: num,
-      originalIndex: index,
-    }))
-    .sort((a, b) => {
-      return b.value - a.value;
-    });
+  const chosen: number[] = [];
+  const n = numbers.length;
+  let start = 0;
 
-  const res = new Set<Digits>();
-  let lastAdded = { value: -1, originalIndex: -1 };
-  let sum = 0;
+  // We need to pick `size` digits
+  for (let remaining = size; remaining > 0; remaining--) {
+    // Last index we can start from so that there's enough digits left
+    const end = n - remaining;
 
-  for (let i = 0; i < size; i++) {
-    for (let j = 0; j < digits.length; j++) {
-      if (digits[j].originalIndex === digits.length - 1 && res.size === 0)
-        continue;
-      if (lastAdded.originalIndex > digits[j].originalIndex) continue;
-      if (res.has(digits[j])) continue;
-      res.add(digits[j]);
-      lastAdded = digits[j];
-      sum += digits[j].value * 10 ** (size - 1 - i);
-      break;
+    let maxDigit = -Infinity;
+    let maxIndex = start;
+
+    // Find the biggest digit we can take in [start, end]
+    for (let i = start; i <= end; i++) {
+      if (numbers[i] > maxDigit) {
+        maxDigit = numbers[i];
+        maxIndex = i;
+      }
     }
-  }
-  console.log(sum);
 
-  return sum;
+    chosen.push(maxDigit);
+    start = maxIndex + 1; // must keep original order
+  }
+
+  // Turn chosen digits into a number
+  return chosen.reduce((acc, d) => acc * 10 + d, 0);
 }
 
 export function partOne(input: string): number {
@@ -70,12 +61,7 @@ function parseInput(input: string): number[][] {
 }
 
 function solve() {
-  // const inputPath = path.join(process.cwd(), '..', 'inputs', 'day-03.txt');
-  // const input = fs.readFileSync(inputPath, 'utf-8');
-  const input = `987654321111111
-811111111111119
-234234234234278
-818181911112111`;
+  const input = fs.readFileSync('../../inputs/day-03.txt', 'utf-8');
 
   console.log('Part 1:', partOne(input));
   console.log('Part 2:', partTwo(input));
