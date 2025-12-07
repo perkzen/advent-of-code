@@ -1,0 +1,19 @@
+{
+  "name": "day-07",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "solve": "tsx src/solve.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "prettier": "3.7.3",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.18.1"
+}
